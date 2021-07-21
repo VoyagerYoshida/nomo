@@ -4,6 +4,8 @@
   <img src="./assets/mono_icon.png" width="25%">
 <p>
 
+Innovation on the whiteboard in the seminar room!
+
 # About nomo
 
 <p align="center">

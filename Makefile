@@ -9,7 +9,13 @@ build:
 
 .PHONY: run
 run:
-	@docker run -it --rm --name=$(CONTAINER_NAME) -v $(PWD)/N-21:$(VOLUMEDIR)/monitored -v $(PWD)/pdf:$(VOLUMEDIR)/out $(IMAGE_NAME) 
+	@docker run \
+			-it --rm \
+			--name=$(CONTAINER_NAME) \
+			-v $(PWD)/N-21:$(VOLUMEDIR)/monitored \
+			-v $(PWD)/pdf:$(VOLUMEDIR)/out \
+			--env-file $(PWD)/.env \
+			$(IMAGE_NAME) 
 
 .PHONY: stop
 stop:

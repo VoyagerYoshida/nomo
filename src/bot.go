@@ -41,19 +41,21 @@ func copy_file(read_file string, write_file string) error {
 	return nil
 }
 
-func post_file(api *slack.Client, filename string) error {
-	_, _, err := api.PostMessage("#notice-whiteboard", slack.MsgOptionBlocks(
-		&slack.SectionBlock{
-			Type: slack.MBTSection,
-			Text: &slack.TextBlockObject{
-				Type: "plain_text",
-				Text: "野茂が投げた！",
-			},
-			Accessory: slack.NewAccessory(
-				slack.NewImageBlockElement(filename, "NOMO:"+filename),
-			),
+func post_file(api *slack.Client, format_time string) error {
+	file, err := os.Open("/var/www/out/" + format_time + ".pdf")
+	if err != nil {
+		return err
+	}
+
+	_, err = api.UploadFile(
+		slack.FileUploadParameters{
+			Reader:         file,
+			Filename:       format_time,
+			Title:          format_time + ".pdf",
+			InitialComment: "野茂が投げた！",
+			Channels:       []string{os.Getenv("SLACK_CHANNEL")},
 		},
-	))
+	)
 	if err != nil {
 		return err
 	}
@@ -94,7 +96,7 @@ func loop(read_file string) {
 	}
 	fmt.Println(">>> Remove Succeed.")
 
-	err = post_file(slack.New(os.Getenv("SLACK_API_TOKEN")), write_file)
+	err = post_file(slack.New(os.Getenv("SLACK_API_TOKEN")), format_time)
 	if err != nil {
 		fmt.Println("!!! Cannot post the file.")
 		return

@@ -23,7 +23,6 @@ stop:
 
 .PHONY: test
 test:
-	@mkdir -p $(PWD)/{N-21,pdf}
 	@cp $(PWD)/assets/TestImage.pdf $(PWD)/N-21/TestImage.pdf
 	@docker run \
 			-it --rm \

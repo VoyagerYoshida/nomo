@@ -18,7 +18,12 @@ Innovation on the whiteboard in the seminar room!
 # Setting Environment 
 $ cp .env.sample .env
 $ vim .env
+
+# Setting Directory
+$ mkdir N-21 pdf
+$ mount <USB-device Path> N-21
 ```
+**Notice**: USB-device name must be fixed or not change dynamically.
 
 ## Implemented Commands
 The commands are implemented by Makefile.
